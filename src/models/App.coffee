@@ -6,3 +6,18 @@ class window.App extends Backbone.Model
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
 
+  # this.'playerHand'.on("stand", function(){
+  #   //do entire dealer turn
+  #   })
+
+  hit: ->
+
+
+  stand: ->
+
+
+  dealerTurn: ->
+
+
+
+
