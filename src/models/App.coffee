@@ -6,18 +6,29 @@ class window.App extends Backbone.Model
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
 
-  # this.'playerHand'.on("stand", function(){
-  #   //do entire dealer turn
-  #   })
+    console.log @get("playerHand").scores();
+    if @get("playerHand").scores() is "blackjack" then @dealerTurn @get("playerHand").scores()
 
-  hit: ->
+    @get("playerHand").on "stand", =>
+      console.log "app listened"
+      @dealerTurn @get("playerHand").scores()
 
-
-  stand: ->
-
-
-  dealerTurn: ->
+  # hit: ->
 
 
+  # stand: ->
+
+
+  dealerTurn: (score) ->
+    console.log "dealer turn"
+    console.log score
+    # console.log @get "dealerHand"
+    @get("dealerHand").models[0].flip()
+    @calculateWin()
+    @get("dealerHand").hit()  while @get("dealerHand").scores() < 17
+    @calculateWin()
+
+  calculateWin: ->
+    console.log "calculate win"
 
 
