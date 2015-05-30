@@ -7,7 +7,6 @@ class window.Hand extends Backbone.Collection
 
   bet: (amount) ->
     @betAmount += amount
-    console.log @betAmount
 
   hit: ->
     @add(@deck.pop())
