@@ -10,9 +10,14 @@ class window.App extends Backbone.Model
     if @get("playerHand").scores() is "blackjack" then @dealerTurn @get("playerHand").scores()
 
     @get("playerHand").on "stand", =>
-      console.log "app listened"
       @dealerTurn @get("playerHand").scores()
 
+    @get("playerHand").on "bust", =>
+      console.log "you lose sucker"
+      # @dealerTurn @get("playerHand").scores()
+
+    @get("dealerHand").on "bust", =>
+      console.log "Dealer busted. You win!"
   # hit: ->
 
 
@@ -20,15 +25,21 @@ class window.App extends Backbone.Model
 
 
   dealerTurn: (score) ->
-    console.log "dealer turn"
-    console.log score
+    # console.log "dealer turn"
+    # console.log score
     # console.log @get "dealerHand"
     @get("dealerHand").models[0].flip()
-    @calculateWin()
-    @get("dealerHand").hit()  while @get("dealerHand").scores() < 17
-    @calculateWin()
+    while @get("dealerHand").scores() < 17
+      @get("dealerHand").hit()
+      #@get("dealerHand").bust()  if @get("dealerHand").scores() > 21
+    if @get("dealerHand").scores() <= 21 then @calculateWin score, @get("dealerHand").scores()
 
-  calculateWin: ->
-    console.log "calculate win"
+  calculateWin: (player, dealer) ->
+    # console.log "calculate win"
+    if player is "blackjack" then player = 22
+    if dealer is "blackjack" then dealer = 22
+    if player > dealer then console.log "You win son!"
+    else if player < dealer then console.log "You lose."
+    else console.log "It's a push"
 
 

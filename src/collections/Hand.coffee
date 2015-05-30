@@ -6,9 +6,8 @@ class window.Hand extends Backbone.Collection
 
   hit: ->
     @add(@deck.pop())
-    console.log @scores();
-    if @scores() is "blackjack" then @stand()
-    else if @scores() > 0 then console.log "fdsfds"
+    if @scores() is 21 then @stand()
+    else if @scores() > 21 then @bust()
 
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1
@@ -31,8 +30,7 @@ class window.Hand extends Backbone.Collection
      @minScore()
 
   stand: ->
-    console.log "stand called";
     @trigger "stand", @
 
-  # bust: ->
-  #   if @minScore() > 21 then true
+  bust: ->
+    @trigger "bust", @
