@@ -11,11 +11,10 @@ class window.GameView extends Backbone.View
     'click .stand-button': -> @model.get('playerHand').stand()
 
   initialize: ->
-    # @model.on 'add remove change', => @render()
     @render()
 
   render: ->
-    console.log "trying to render"
+    $("body").append(@$el)
     @$el.children().detach()
     @$el.html @template()
     @$('.player-hand-container').html new HandView(collection: @model.get 'playerHand').el

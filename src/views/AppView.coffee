@@ -1,7 +1,4 @@
 class window.AppView extends Backbone.View
-  template: _.template '
-    <button value=100 class="bet-button">Bet 100</button> <button class="deal-button">Deal Hand</button>
-  '
 
   events:
     'click .deal-button': "handleDeal"
@@ -9,19 +6,28 @@ class window.AppView extends Backbone.View
 
 
   handleBet: (e) ->
-    money = $(e.currentTarget).attr('value')
-    money = parseInt(money)
-    @model.get('playerHand').bet(money)
+    money = parseInt($(e.currentTarget).attr('value'))
+    @model.bet(money)
 
   handleDeal: ->
     @model.deal()
-    @render()
+
 
 
   initialize: ->
+    @model.on 'bet deal change', => @render()
     @render()
+
+  template: _.template '
+    <button value=100 class="bet-button">Bet 100</button> <button class="deal-button">Deal Hand</button> <span class="bet">Current Bet: </span> <span class="chips">Pile: </span>
+  '
 
   render: ->
     @$el.children().detach()
-    @$el.html @template()
+    @$el.html @template @model
+    console.log @model.get 'dealt'
+    if @model.dealt
+      @$("button").remove()
+    @$('.bet').text ("Current Bet: " + @model.get 'betAmount')
+    @$('.chips').text ("Stack: " + @model.get 'chips')
 
