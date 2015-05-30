@@ -3,6 +3,11 @@ class window.Hand extends Backbone.Collection
 
   initialize: (array, @deck, @isDealer) ->
 
+  betAmount: 0
+
+  bet: (amount) ->
+    @betAmount += amount
+    console.log @betAmount
 
   hit: ->
     @add(@deck.pop())

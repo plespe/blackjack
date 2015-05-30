@@ -5,6 +5,7 @@ class window.App extends Backbone.Model
     @set 'deck', deck = new Deck()
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
+    @set 'chips', 2000
 
     console.log @get("playerHand").scores();
     if @get("playerHand").scores() is "blackjack" then @dealerTurn @get("playerHand").scores()

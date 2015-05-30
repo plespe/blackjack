@@ -13,3 +13,6 @@ class window.Deck extends Backbone.Collection
   dealDealer: ->
     new Hand [@pop().flip(), @pop()], @, true
 
+  # last: ->
+  #   @[length-1]
+
