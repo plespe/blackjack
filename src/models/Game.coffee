@@ -13,10 +13,20 @@ class window.Game extends Backbone.Model
 
     @get("playerHand").on "bust", =>
       console.log "you lose sucker"
-      # @dealerTurn @get("playerHand").scores()
+      @dealerWins()
 
     @get("dealerHand").on "bust", =>
       console.log "Dealer busted. You win!"
+      @playerWins()
+
+  playerWins: ->
+    @trigger 'playerWins', @
+
+  dealerWins: ->
+    @trigger 'dealerWins', @
+
+  tie: ->
+    @trigger 'tie', @
 
   dealerTurn: (score) ->
 
@@ -30,7 +40,14 @@ class window.Game extends Backbone.Model
 
     if player is "blackjack" then player = 22
     if dealer is "blackjack" then dealer = 22
-    if player > dealer then console.log "You win son!"
-    else if player < dealer then console.log "You lose."
-    else console.log "It's a push"
+    if player > dealer
+      console.log "You win son!"
+      @playerWins()
+    else if player < dealer
+      console.log "You lose."
+      @dealerWins()
+    else
+      console.log "It's a push"
+      @tie()
+
 
